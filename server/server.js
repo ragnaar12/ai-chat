@@ -1,33 +1,38 @@
 const express = require('express');
-const { OpenAI } = require('openai');
+const fetch = require('node-fetch');
+require('dotenv').config();
+
 const app = express();
-const port = 3000;
-
-const openai = new OpenAI({
-  apiKey: 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', // remplace par ta vraie clé API OpenAI
-});
-
 app.use(express.json());
 
-app.post('/chat', async (req, res) => {
+app.post('/api/chat', async (req, res) => {
   const userMessage = req.body.message;
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [{ role: 'user', content: userMessage }],
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: userMessage }]
+      })
     });
 
-    res.json({ response: completion.choices[0].message.content });
+    const data = await response.json();
+    res.json({ reply: data.choices[0].message.content });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Erreur lors de la communication avec ChatGPT');
+    console.error('Erreur:', error);
+    res.status(500).json({ error: 'Erreur de connexion à OpenAI' });
   }
 });
 
-app.listen(port, () => {
-  console.log(`Serveur UniSign connecté à ChatGPT sur http://localhost:${port}`);
+app.listen(3000, () => {
+  console.log('Serveur lancé sur http://localhost:3000');
 });
+
 
 
 app.listen(port, () => {
