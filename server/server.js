@@ -1,17 +1,17 @@
-require('dotenv').config();
 const express = require('express');
-const { OpenAI } = require('openai');
 const cors = require('cors');
+const { OpenAI } = require('openai');
+require('dotenv').config();
 
 const app = express();
 const port = 3000;
 
-app.use(cors());
-app.use(express.json());
-
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+app.use(cors());
+app.use(express.json());
 
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
@@ -30,5 +30,6 @@ app.post('/chat', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Serveur UniSign lancé sur http://localhost:${port}`);
+  console.log(`Serveur UniSign connecté à ChatGPT sur http://localhost:${port}`);
 });
+
