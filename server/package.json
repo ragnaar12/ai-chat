@@ -1,9 +1,18 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "api/chat.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/api/chat", "dest": "/api/chat.js" }
-  ]
+  "name": "ai-chat",
+  "version": "1.0.0",
+  "description": "Chatbot utilisant OpenAI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.7",
+    "dotenv": "^10.0.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
 }
+
