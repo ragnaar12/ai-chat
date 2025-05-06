@@ -1,51 +1,47 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const fetch = require('node-fetch');
-
-dotenv.config();
+const express = require("express");
+const cors = require("cors");
+const fetch = require("node-fetch");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(cors());
 app.use(express.json());
 
-app.post('/chat', async (req, res) => {
-    const userMessage = req.body.message;
+const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.COHERE_API_KEY;
 
-    try {
-        const response = await fetch('https://api.cohere.ai/v1/chat', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${process.env.COHERE_API_KEY}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: 'command-r',
-                message: userMessage,
-                temperature: 0.7,
-                max_tokens: 1000
-            })
-        });
+app.post("/chat", async (req, res) => {
+  const { message } = req.body;
 
-        const data = await response.json();
+  try {
+    const response = await fetch("https://api.cohere.ai/v1/chat", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "command-r",
+        message: message,
+        temperature: 0.7,
+        max_tokens: 1000
+      })
+    });
 
-        if (!data?.text) {
-            return res.status(500).json({ error: 'Réponse vide de Cohere.' });
-        }
+    const data = await response.json();
+    res.json({ reply: data.text || "Aucune réponse" });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur serveur: " + error.message });
+  }
+});
 
-        res.json({ reply: data.text });
-
-    } catch (error) {
-        console.error("Erreur serveur :", error);
-        res.status(500).json({ error: 'Erreur de traitement côté serveur.' });
-    }
+app.get("/", (req, res) => {
+  res.send("UniChat Backend fonctionne !");
 });
 
 app.listen(PORT, () => {
-    console.log(`Serveur en ligne sur http://localhost:${PORT}`);
+  console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
+
 
 
 
