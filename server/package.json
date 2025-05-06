@@ -1,7 +1,7 @@
 {
   "name": "ai-chat",
   "version": "1.0.0",
-  "description": "Chatbot avec OpenAI",
+  "description": "Chatbot utilisant OpenAI GPT-3.5",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -11,22 +11,6 @@
     "node-fetch": "^2.6.1",
     "dotenv": "^10.0.0"
   },
-  "devDependencies": {},
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "author": "",
   "license": "ISC"
 }
-{
-  "model": "gpt-3.5-turbo",
-  "messages": [
-    {
-      "role": "user",
-      "content": "Votre message ici"
-    }
-  ]
-}
-
-
-
