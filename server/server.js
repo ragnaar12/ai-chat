@@ -32,30 +32,8 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-const response = await fetch('https://api.openai.com/v1/chat/completions', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-  },
-  body: JSON.stringify({
-    model: 'gpt-3.5-turbo',
-    messages: [{ role: 'user', content: userMessage }],
-  }),
-});
-
-// Vérifie si la réponse HTTP est OK
-if (!response.ok) {
-  const errorDetails = await response.text();  // récupère les détails de l'erreur
-  throw new Error(`HTTP Error: ${response.status} - ${errorDetails}`);
-}
-
-const data = await response.json();
-res.json({ reply: data.choices[0].message.content });
-
-
 // Lancer le serveur
-const port = process.env.PORT || 3000; // Utiliser le port configuré sur Vercel ou 3000 en local
+const port = process.env.PORT || 3000; // Utiliser le port configuré sur Vercel ou 3000 par défaut
 app.listen(port, () => {
   console.log(`Serveur lancé sur http://localhost:${port}`);
 });
