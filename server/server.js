@@ -36,13 +36,10 @@ app.post('/api/chat', async (req, res) => {
     }
   } catch (error) {
     console.error('Erreur:', error);
-    res.status(500).json({ error: 'Erreur de connexion à OpenAI' });
   }
 });
 
-// Lancer le serveur
-app.listen(port, () => {
-  console.log(`Serveur lancé sur http://localhost:${port}`);
+
 });
 
 
