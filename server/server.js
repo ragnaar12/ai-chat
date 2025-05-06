@@ -15,7 +15,7 @@ app.post('/api/chat', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.gitignore.env.OPENAI_API_KEY}`, // Utilisation de la clé API stockée dans .env
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`, // Utilisation de la clé API stockée dans .env
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
@@ -33,8 +33,11 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // Lancer le serveur
-const port = process.gitignore.env.PORT || 3000; // Utiliser le port configuré sur Vercel
-app.listen(port, () =>
+const port = process.env.PORT || 3000; // Utiliser le port configuré sur Vercel ou 3000 en local
+app.listen(port, () => {
+  console.log(`Serveur lancé sur http://localhost:${port}`);
+});
+
 
 
 
