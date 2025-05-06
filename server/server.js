@@ -29,13 +29,12 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('Serveur lancé sur http://localhost:3000');
-});
-
-
+// Correction : Une seule déclaration du port
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Serveur UniSign connecté à ChatGPT sur http://localhost:${port}`);
 });
+
+
 
