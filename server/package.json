@@ -1,18 +1,22 @@
 {
   "name": "ai-chat",
   "version": "1.0.0",
-  "description": "Chatbot utilisant OpenAI",
+  "description": "Chatbot avec OpenAI",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^2.6.1",
     "dotenv": "^10.0.0"
   },
+  "devDependencies": {},
   "engines": {
-    "node": "16.x"
-  }
+    "node": ">=14.0.0"
+  },
+  "author": "",
+  "license": "ISC"
 }
+
 
